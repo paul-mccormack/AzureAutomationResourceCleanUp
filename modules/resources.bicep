@@ -2,6 +2,8 @@ param location string = resourceGroup().location
 param tags object
 param automationAccountName string
 param runbookName string
+param runbookDescription string
+param runbookType string
 param scriptUri string
 param scheduleName string
 param scheduleFrequency string
@@ -27,8 +29,8 @@ resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2024-10-23' =
   tags: tags
   location: location
     properties: {
-    runbookType: 'PowerShell'
-    description: 'Scan all deployed resources and tag with the email address of the last person who modified'
+    runbookType: runbookType
+    description: runbookDescription
     publishContentLink: {
       uri: scriptUri
       version: '1.0'
