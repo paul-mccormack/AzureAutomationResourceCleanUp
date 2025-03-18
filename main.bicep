@@ -24,10 +24,10 @@ param roleDefinitionIds array = [
   '4a9ae827-6dc8-4573-8ac7-8239d42aa03f'
 ]
 @description('Name for Automation Account')
-param automationAccountName string = 'autoDeployedByTag'
+param automationAccountName string = 'orphanedResourceTag'
 
 @description('Name for Run Book')
-param runbookName string = 'tagResourcesWithDeployerID'
+param runbookName string = 'findOrphanedResources'
 
 @description('Name for schedule')
 param scheduleName string = 'dailySchedule'
@@ -47,14 +47,14 @@ param scheduleFrequency string = 'Day'
 param startTime string = '2025-03-19T09:00:00.000Z'
 
 @description('Location to pull the powershell script from')
-param scriptUri string = 'https://raw.githubusercontent.com/paul-mccormack/azAutomation/main/tagResourceOwner.ps1'
+param scriptUri string = 'https://raw.githubusercontent.com/paul-mccormack/AzureAutomationResourceCleanUp/refs/heads/main/tagOrphanResources.ps1'
 
 @description('Tags')
 param tags object = {
   'Created by': 'Paul McCormack'
   'Management Area': 'DDaT'
   Service: 'Azure Automation'
-  Recharge: 'DDaT'
+  'Cost Centre': 'Shared'
 }
 
 @description('Module for resource deployment')
