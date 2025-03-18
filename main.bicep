@@ -1,9 +1,12 @@
-//This template needs to be run at Management Group scope as we want to apply role assignments at that level.  Use the commands below to deploy.
-//-ManagementGroupId should be the management group containing the subscription and resource group you are deploying resources into.
-
-//Connect-AzAccount
-//New-AzManagementGroupDeployment -ManagementGroupId MG-Management -Location UKSouth -TemplateFile .\main.bicep
-
+// Template prepared by Paul McCormack
+//
+// Deployment will use stacks to ensure role assignments are managed with the resources.
+//
+// This template needs to be run at Management Group scope as we want to apply role assignments at that level.  Use the commands below to deploy.
+//
+// Connect-AzAccount
+// New-AzManagementGroupDeploymentStack -ManagementGroupId MG-SCC-Common -Location UKSouth -TemplateFile .\main.bicep -TemplateParameterFile .\main.bicepparam -ActionOnUnmanage deleteResources -DenySettingsMode None
+// -ManagementGroupId should be the management group containing the subscription and resource group you are deploying resources into.
 //
 // Type Definitions
 //
@@ -32,9 +35,6 @@ param resourceRgName string
 
 @description('Required: Location of Resource Group')
 param location string
-
-@description('Required: Management Group ID where you want to give the managed identity contributor access')
-param mgtGroupIam string
 
 @description('Required: builtin role definition ID for Reader and Tag Contributor Roles')
 param roleDefinitionIds array
@@ -88,12 +88,12 @@ module deployResources 'modules/resources.bicep' = {
   }
 }
 
-@description('Module for role assignment using output from deployResources module')
-module roleAssignment 'modules/roleAssignment.bicep' = [ for roleDefinitionId in roleDefinitionIds: {
-  scope: managementGroup(mgtGroupIam)
-  name: 'roleAssignment-${roleDefinitionId}'
-  params: {
-    automationAccountId: deployResources.outputs.automationAccountPrincipalId
-    roleDefinitionId: roleDefinitionId
+@description('Create role assignments for automation account identity')
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [ for roledefinitionId in roleDefinitionIds: {
+  name: guid(managementGroup().id, roledefinitionId)
+  properties: {
+    principalId: deployResources.outputs.automationAccountPrincipalId
+    roleDefinitionId: roledefinitionId
+    principalType: 'ServicePrincipal'
   }
 }]
