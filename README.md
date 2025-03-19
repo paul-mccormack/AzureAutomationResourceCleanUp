@@ -23,3 +23,22 @@ New-AzManagementGroupDeploymentStack -ManagementGroupId MG-SCC-Common -Location 
 ```
 
 ## Runbook PowerShell Script
+
+The PowerShell script, which can be found  here, [tagOrphanedResources.ps1](https://github.com/paul-mccormack/AzureAutomationResourceCleanUp/blob/main/tagOrphanResources.ps1), is also very simple.  Set the tag key to use, get the current date and time for the tag value, setup the resource graph queries then loop through the results and set the tag on any resources it finds.  I considered putting the loop into a function to prevent just repeating the same loop but decided against it for the sake of keep ing the run book logs nice and clear.  particularly when it doesn't find any type of resource I am looking for.  I want it to say "No NSG's were found" and "No disks were found" instead repeating "No resources were found".  Maybe I'll revisit that at some point.
+
+Setting up the resource graph queries to find orphaned resources involved creating a resource of that type then comparing the properties to the same type of resource which was in use.
+
+For example.  The NSG query looks looks like the KQL below
+
+```
+$orphanedNsgQuery = 'Resources
+| where type == "microsoft.network/networksecuritygroups"
+| where isnull(properties.networkInterfaces)
+| where isnull(properties.subnets)
+| where tags !contains "Orphaned Resource"
+| project id, name'
+```
+
+An NSG can be attached to a Subnet or a NIC.  not attached to anything the properties doesn't contain `properties.networkInterfaces` or `properties.subnets`.  To prevent already identified resources being found again on the next run and the date value of the tag being overwritten I have included a check to filter out already tagged resource with the line `| where tags !contains "Orphaned Resource"`.
+
+
