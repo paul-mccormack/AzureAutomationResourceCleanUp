@@ -9,7 +9,7 @@ param scheduleName string
 param scheduleFrequency string
 param startTime string
 
-resource automation 'Microsoft.Automation/automationAccounts@2024-10-23' = {
+resource automation 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   name: automationAccountName
   tags: tags
   location: location
@@ -23,7 +23,7 @@ resource automation 'Microsoft.Automation/automationAccounts@2024-10-23' = {
   }
 }
 
-resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2024-10-23' = {
+resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2023-11-01' = {
   parent: automation
   name: runbookName
   tags: tags
@@ -38,7 +38,7 @@ resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2024-10-23' =
   }
 }
 
-resource schedule 'Microsoft.Automation/automationAccounts/schedules@2024-10-23' = {
+resource schedule 'Microsoft.Automation/automationAccounts/schedules@2023-11-01' = {
   name: scheduleName
   parent: automation
   properties: {
@@ -48,7 +48,7 @@ resource schedule 'Microsoft.Automation/automationAccounts/schedules@2024-10-23'
   }
 }
 
-resource jobSchedule 'Microsoft.Automation/automationAccounts/jobSchedules@2024-10-23' = {
+resource jobSchedule 'Microsoft.Automation/automationAccounts/jobSchedules@2023-11-01' = {
   name: guid(resourceGroup().id, schedule.id)
   parent:automation
   properties: {

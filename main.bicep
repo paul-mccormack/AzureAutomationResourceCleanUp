@@ -5,7 +5,7 @@
 // This template needs to be run at Management Group scope as we want to apply role assignments at that level.  Use the commands below to deploy.
 //
 // Connect-AzAccount
-// New-AzManagementGroupDeploymentStack -ManagementGroupId MG-SCC-Common -Location UKSouth -TemplateFile .\main.bicep -TemplateParameterFile .\main.bicepparam -ActionOnUnmanage deleteResources -DenySettingsMode None
+// New-AzManagementGroupDeploymentStack -Name orphanedResourceScanDeployment -ManagementGroupId MG-SCC-Common -Location UKSouth -TemplateFile .\main.bicep -TemplateParameterFile .\main.bicepparam -ActionOnUnmanage deleteResources -DenySettingsMode None
 // -ManagementGroupId should be the management group containing the subscription and resource group you are deploying resources into.
 //
 // Type Definitions
@@ -93,7 +93,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [
   name: guid(managementGroup().id, roledefinitionId)
   properties: {
     principalId: deployResources.outputs.automationAccountPrincipalId
-    roleDefinitionId: roledefinitionId
+    roleDefinitionId: managementGroupResourceId('Microsoft.Authorization/roleDefinitions', roledefinitionId)
     principalType: 'ServicePrincipal'
   }
 }]
