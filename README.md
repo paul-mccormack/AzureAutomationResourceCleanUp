@@ -41,4 +41,14 @@ $orphanedNsgQuery = 'Resources
 
 An NSG can be attached to a Subnet or a NIC.  not attached to anything the properties doesn't contain `properties.networkInterfaces` or `properties.subnets`.  To prevent already identified resources being found again on the next run and the date value of the tag being overwritten I have included a check to filter out already tagged resource with the line `| where tags !contains "Orphaned Resource"`.
 
+## Checking it works
 
+After deploying the solution and giving it a test run I can go to Tags in the portal and search for the tag key.
+
+![tag](https://github.com/paul-mccormack/AzureAutomationResourceCleanUp/blob/main/images/tag.jpg)
+
+Then digging into the resources with that tag it's found an NSG that is not attached to any subnets or NIC resource.  Most likely a candidate for deletion.
+
+![orphaned_nsg](https://github.com/paul-mccormack/AzureAutomationResourceCleanUp/blob/main/images/orphaned_nsg.jpg)
+
+All we need to do now is setup a process for checking periodically for that tag key then investigating any resources identified.  Should be an easy way to keep things nice and clean and drive up the cost efficiency of our Azure environment.
