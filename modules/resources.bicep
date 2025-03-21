@@ -23,6 +23,16 @@ resource automation 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   }
 }
 
+resource module 'Microsoft.Automation/automationAccounts/modules@2023-11-01' = {
+  parent: automation
+  name: 'az.resourcegraph'
+  properties: {
+    contentLink: {
+      uri: 'https://www.powershellgallery.com/api/v2/package/Az.ResourceGraph/1.2.0'
+    }
+  }
+}
+
 resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2023-11-01' = {
   parent: automation
   name: runbookName
