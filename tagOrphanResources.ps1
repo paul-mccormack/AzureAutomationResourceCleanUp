@@ -44,6 +44,8 @@ $orphanedPublicIp = 'Resources
 | where tags !contains "Orphaned Resource"
 | project resourceGroup, name, id'
 
+Import-Module Az.ResourceGraph
+
 # Login to Azure using a Managed Service Identity
 Connect-AzAccount -Identity
 

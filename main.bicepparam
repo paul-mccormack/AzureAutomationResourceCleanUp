@@ -1,7 +1,7 @@
 using './main.bicep'
 
-param subId = 'sub id'
-param resourceRgName = 'rg id'
+param subId = 'c26d7a6a-d767-4175-bc57-d658d9ed462f'
+param resourceRgName = 'rg-uks-mgmt-automation'
 param location = 'uksouth'
 param roleDefinitionIds = [
   'acdd72a7-3385-48ef-bd42-f606fba81ae7'
