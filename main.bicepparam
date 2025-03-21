@@ -11,6 +11,16 @@ param automationAccountName = 'orphanedResourceTag'
 param runbookName = 'findOrphanedResources'
 param runbookDescription = 'Scan environment for orphaned resources and sets a tag for further investigation'
 param runbookType = 'PowerShell'
+param modules = [
+  {
+    name: 'Az.ResourceGraph'
+    uri: 'https://www.powershellgallery.com/api/v2/package/Az.ResourceGraph/1.2.0'
+  }
+  {
+    name: 'Az.Accounts'
+    uri: 'https://www.powershellgallery.com/api/v2/package/Az.Accounts/4.0.2'
+  }
+]
 param scheduleName = 'dailySchedule'
 param scheduleFrequency = 'Day'
 param startTime = '2025-03-21T09:30:00.000Z'

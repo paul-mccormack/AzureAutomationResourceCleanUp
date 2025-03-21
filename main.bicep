@@ -42,6 +42,9 @@ param roleDefinitionIds array
 @description('Required: Name for Automation Account')
 param automationAccountName string
 
+@description('Required: Modules to be updated or installed into Automation Account')
+param modules array
+
 @description('Required: Name for Run Book')
 param runbookName string
 
@@ -81,6 +84,7 @@ module deployResources 'modules/resources.bicep' = {
     runbookName: runbookName
     runbookDescription: runbookDescription
     runbookType: runbookType
+    modules: modules
     scheduleName: scheduleName
     scheduleFrequency: scheduleFrequency
     startTime: startTime

@@ -4,6 +4,7 @@ param automationAccountName string
 param runbookName string
 param runbookDescription string
 param runbookType string
+param modules array
 param scriptUri string
 param scheduleName string
 param scheduleFrequency string
@@ -23,15 +24,15 @@ resource automation 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   }
 }
 
-resource module 'Microsoft.Automation/automationAccounts/modules@2023-11-01' = {
+resource moduleResourceGraph 'Microsoft.Automation/automationAccounts/modules@2023-11-01' = [for module in modules: {
   parent: automation
-  name: 'az.resourcegraph'
-  properties: {
+  name: module.name
+  properties: { 
     contentLink: {
-      uri: 'https://www.powershellgallery.com/api/v2/package/Az.ResourceGraph/1.2.0'
+      uri: module.uri
     }
   }
-}
+}]
 
 resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2023-11-01' = {
   parent: automation
