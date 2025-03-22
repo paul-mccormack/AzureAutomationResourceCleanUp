@@ -36,7 +36,7 @@ The PowerShell script, which can be found here, [tagOrphanedResources.ps1](https
 4. Find all the subscriptions contained under your target Management Group and any child Management Groups.
 5. Run the resourse graph queries in each subscription then loop through the results setting the tag on any resources identified.
 
-I considered putting the loop into a function to prevent just code repetition but decided against it for the sake of keeping the run book logs clear,  particularly when it doesn't find any type of resource I am looking for.  I want it to say "No NSG's were found" and "No disks were found" instead of repeating "No resources were found".  Maybe I'll revisit that at some point.
+I considered putting the loop into a function to prevent code repetition but decided against it for the sake of keeping the run book logs clear,  particularly when it doesn't find any type of resource I am looking for.  I want it to say "No NSG's were found" and "No disks were found" instead of repeating "No resources were found".  Maybe I'll revisit that at some point.
 
 Setting up the resource graph queries to find orphaned resources involved creating a resource of that type then comparing the properties to the same type of resource which was in use.
 
