@@ -51,7 +51,7 @@ $orphanedNsgQuery = 'Resources
 | project id, name'
 ```
 
-An NSG can be attached to a Subnet or a NIC.  not attached to anything the properties doesn't contain `properties.networkInterfaces` or `properties.subnets`.  To prevent already identified resources being found again on the next run and the date value of the tag being overwritten I have included a check to filter out already tagged resource with the line `| where tags !contains "Orphaned Resource"`.
+An NSG can be attached to a Subnet or a NIC.  If not attached to anything the properties doesn't contain `properties.networkInterfaces` or `properties.subnets`.  To prevent already identified resources being found again on the next run and the date value of the tag being overwritten I have included a check to filter out already tagged resource with the line `| where tags !contains "Orphaned Resource"`.
 
 ## Checking it works
 
