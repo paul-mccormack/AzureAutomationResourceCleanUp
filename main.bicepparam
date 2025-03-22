@@ -1,8 +1,8 @@
 using './main.bicep'
 
-param subId = 'c26d7a6a-d767-4175-bc57-d658d9ed462f'
-param resourceRgName = 'rg-uks-mgmt-automation'
-param location = 'uksouth'
+param subId = 'your target subscription id'
+param resourceRgName = 'your target resource group name'
+param location = 'your target region'
 param roleDefinitionIds = [
   'acdd72a7-3385-48ef-bd42-f606fba81ae7'
   '4a9ae827-6dc8-4573-8ac7-8239d42aa03f'

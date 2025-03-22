@@ -1,7 +1,10 @@
-$mgroupQuery = 'resourcecontainers
+#
+# This is an alternative way of finding the subscriptions using Azure Resource Graph.  Not used in the deployment at the moment.
+
+$subQuery = 'resourcecontainers
 | where type == "microsoft.resources/subscriptions"
 | mv-expand managementGroupParent = properties.managementGroupAncestorsChain
-| where managementGroupParent.name =~ "MG-SCC-Common"
+| where managementGroupParent.name =~ "Your top level MG ID"
 | project name, subscriptionId'
 
-$mgroups = Search-AzGraph -Query $mgroupQuery
+$subs = Search-AzGraph -Query $subQuery

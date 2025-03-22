@@ -4,7 +4,7 @@
 Disable-AzContextAutosave -Scope Process | Out-Null;
 
 # Set the top level Management Group containing the management groups and subscriptions to scan
-$ManagementGroupID = 'MG-SCC-Common'
+$ManagementGroupID = 'Your MG name'
 
 # Get the date and time of the current run
 $date = Get-Date
@@ -120,7 +120,7 @@ foreach ($subId in $subIds) {
     
     # Create the tag on any public IP's identified
     if (!$pips) {
-        Write-Output "No orphaned nics found on $date"
+        Write-Output "No orphaned public ip's found on $date"
     }
     else {
         foreach ($pip in $pips) {
