@@ -12,7 +12,7 @@ The deployment will be targetted at the top level management group using Bicep i
 
 ## Deployment details
 
-The deployment is very simple.  Consisting of an Automation Account, wtih the necessary AZ PowerShell modules versions and associated schedule to run a job daily at 9:30am.  The system assigned identity is then given two role assignments at the top level management group.  These are Reader and Tag Contributor.
+The deployment is very simple.  Consisting of an Automation Account, wtih the necessary AZ PowerShell modules and associated schedule to run a job daily at 9:30am.  The system assigned identity is then given two role assignments at the top level management group.  These are Reader and Tag Contributor.
 
 ### Required PowerShell modules
 
